@@ -1,0 +1,121 @@
+# Azure DevOps Pipeline for Playwright Tests
+# Supports multi-environment and multi-region testing
+
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+      - feature/*
+  paths:
+    exclude:
+      - README.md
+      - docs/*
+
+pr:
+  branches:
+    include:
+      - main
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - name: NODE_VERSION
+    value: '20.x'
+  - name: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD
+    value: '0'
+
+stages:
+  - stage: Test_Development
+    displayName: 'Run Tests - Development Environment'
+    jobs:
+      - job: Test_US_Region
+        displayName: 'Test US Region'
+        steps:
+          - template: templates/test-template.yml
+            parameters:
+              environment: 'dev'
+              region: 'us'
+
+      - job: Test_EU_Region
+        displayName: 'Test EU Region'
+        steps:
+          - template: templates/test-template.yml
+            parameters:
+              environment: 'dev'
+              region: 'eu'
+
+      - job: Test_Asia_Region
+        displayName: 'Test Asia Region'
+        steps:
+          - template: templates/test-template.yml
+            parameters:
+              environment: 'dev'
+              region: 'asia'
+
+  - stage: Test_App_Projects
+    displayName: 'Run Tests by App Projects'
+    dependsOn: []
+    jobs:
+      - job: Test_App1_UI
+        displayName: 'App1 - UI Tests'
+        steps:
+          - template: templates/app-test-template.yml
+            parameters:
+              appProject: 'app1-ui'
+              environment: 'dev'
+              region: 'us'
+
+      - job: Test_App2_API
+        displayName: 'App2 - API Tests'
+        steps:
+          - template: templates/app-test-template.yml
+            parameters:
+              appProject: 'app2-api'
+              environment: 'dev'
+              region: 'us'
+
+      - job: Test_App3_Combined
+        displayName: 'App3 - Combined Tests'
+        steps:
+          - template: templates/app-test-template.yml
+            parameters:
+              appProject: 'app3-combined'
+              environment: 'dev'
+              region: 'us'
+
+  - stage: Publish_Reports
+    displayName: 'Publish Test Reports'
+    dependsOn:
+      - Test_Development
+      - Test_App_Projects
+    condition: always()
+    jobs:
+      - job: Publish
+        displayName: 'Publish Test Artifacts'
+        steps:
+          - task: PublishTestResults@2
+            displayName: 'Publish Test Results'
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/junit.xml'
+              searchFolder: '$(System.DefaultWorkingDirectory)/test-results'
+              mergeTestResults: true
+              testRunTitle: 'Playwright Tests - $(Build.BuildNumber)'
+            condition: always()
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish HTML Report'
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/playwright-report'
+              artifact: 'playwright-html-report'
+            condition: always()
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Test Results JSON'
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/test-results'
+              artifact: 'test-results'
+            condition: always()

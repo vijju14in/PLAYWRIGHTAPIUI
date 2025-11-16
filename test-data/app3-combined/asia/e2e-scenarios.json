@@ -1,0 +1,37 @@
+{
+  "region": "asia",
+  "currency": "JPY",
+  "e2eScenarios": [
+    {
+      "scenarioName": "User Login and Product Purchase Flow",
+      "user": {
+        "username": "bob_asia",
+        "password": "password123",
+        "email": "bob@example.com"
+      },
+      "product": {
+        "name": "Laptop",
+        "price": 110000,
+        "currency": "JPY"
+      },
+      "expectedOutcome": "successful_purchase"
+    },
+    {
+      "scenarioName": "User Registration via API and UI Verification",
+      "newUser": {
+        "username": "testuser_asia",
+        "email": "testuser@example.asia",
+        "region": "asia"
+      },
+      "expectedOutcome": "user_visible_in_ui"
+    }
+  ],
+  "apiConfig": {
+    "baseUrl": "/api",
+    "timeout": 30000
+  },
+  "uiConfig": {
+    "baseUrl": "/",
+    "timeout": 30000
+  }
+}

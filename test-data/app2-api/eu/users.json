@@ -1,0 +1,28 @@
+{
+  "region": "eu",
+  "expectedUsers": [
+    {
+      "id": 2,
+      "username": "jane_eu",
+      "email": "jane@example.com",
+      "region": "eu"
+    }
+  ],
+  "newUser": {
+    "username": "alice_eu",
+    "email": "alice@example.eu",
+    "region": "eu"
+  },
+  "updateUser": {
+    "username": "jane_updated",
+    "email": "jane.updated@example.eu"
+  },
+  "apiEndpoints": {
+    "getAll": "/users",
+    "getByRegion": "/users?region=eu",
+    "create": "/users",
+    "getById": "/users/{id}",
+    "update": "/users/{id}",
+    "delete": "/users/{id}"
+  }
+}

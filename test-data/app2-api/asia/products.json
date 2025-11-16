@@ -1,0 +1,32 @@
+{
+  "region": "asia",
+  "currency": "JPY",
+  "expectedProducts": [
+    {
+      "id": 5,
+      "name": "Laptop",
+      "price": 110000,
+      "currency": "JPY",
+      "region": "asia"
+    },
+    {
+      "id": 6,
+      "name": "Mouse",
+      "price": 2800,
+      "currency": "JPY",
+      "region": "asia"
+    }
+  ],
+  "newProduct": {
+    "name": "Keyboard",
+    "price": 8900,
+    "currency": "JPY",
+    "region": "asia"
+  },
+  "apiEndpoints": {
+    "getAll": "/products",
+    "getByRegion": "/products?region=asia",
+    "create": "/products",
+    "getById": "/products/{id}"
+  }
+}

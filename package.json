@@ -1,0 +1,49 @@
+{
+  "name": "playwright-automation-framework",
+  "version": "1.0.0",
+  "description": "Production-ready Playwright automation framework for API and UI testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:app1": "playwright test --project=app1-ui",
+    "test:app2": "playwright test --project=app2-api",
+    "test:app3": "playwright test --project=app3-combined",
+    "test:ui": "playwright test tests/app1-ui",
+    "test:api": "playwright test tests/app2-api",
+    "test:combined": "playwright test tests/app3-combined",
+    "test:dev": "ENV=dev playwright test",
+    "test:staging": "ENV=staging playwright test",
+    "test:prod": "ENV=prod playwright test",
+    "test:us": "REGION=us playwright test",
+    "test:eu": "REGION=eu playwright test",
+    "test:asia": "REGION=asia playwright test",
+    "report": "playwright show-report",
+    "start:mock": "ts-node mock-server/server.ts",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "ui": "playwright test --ui"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing",
+    "api",
+    "ui",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^20.10.0",
+    "dotenv": "^16.3.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "region": "eu",
+  "currency": "EUR",
+  "expectedProducts": [
+    {
+      "id": 3,
+      "name": "Laptop",
+      "price": 899,
+      "currency": "EUR",
+      "region": "eu"
+    },
+    {
+      "id": 4,
+      "name": "Mouse",
+      "price": 22,
+      "currency": "EUR",
+      "region": "eu"
+    }
+  ],
+  "newProduct": {
+    "name": "Keyboard",
+    "price": 69,
+    "currency": "EUR",
+    "region": "eu"
+  },
+  "apiEndpoints": {
+    "getAll": "/products",
+    "getByRegion": "/products?region=eu",
+    "create": "/products",
+    "getById": "/products/{id}"
+  }
+}

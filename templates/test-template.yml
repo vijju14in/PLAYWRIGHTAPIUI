@@ -1,0 +1,48 @@
+# Azure DevOps Pipeline Template for Running Tests
+# Parameters: environment, region
+
+parameters:
+  - name: environment
+    type: string
+    default: 'dev'
+  - name: region
+    type: string
+    default: 'us'
+
+steps:
+  - task: NodeTool@0
+    displayName: 'Install Node.js'
+    inputs:
+      versionSpec: '$(NODE_VERSION)'
+
+  - script: |
+      npm ci
+    displayName: 'Install Dependencies'
+
+  - script: |
+      npx playwright install chromium
+    displayName: 'Install Playwright Browsers'
+
+  - script: |
+      ENV=${{ parameters.environment }} REGION=${{ parameters.region }} npm test
+    displayName: 'Run Playwright Tests (${{ parameters.environment }} - ${{ parameters.region }})'
+    env:
+      ENV: ${{ parameters.environment }}
+      REGION: ${{ parameters.region }}
+    continueOnError: true
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/junit.xml'
+      searchFolder: '$(System.DefaultWorkingDirectory)/test-results'
+      testRunTitle: 'Tests - ${{ parameters.environment }} - ${{ parameters.region }}'
+    condition: always()
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Test Report'
+    inputs:
+      targetPath: '$(System.DefaultWorkingDirectory)/playwright-report'
+      artifact: 'report-${{ parameters.environment }}-${{ parameters.region }}'
+    condition: always()

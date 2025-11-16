@@ -1,0 +1,28 @@
+{
+  "region": "asia",
+  "expectedUsers": [
+    {
+      "id": 3,
+      "username": "bob_asia",
+      "email": "bob@example.com",
+      "region": "asia"
+    }
+  ],
+  "newUser": {
+    "username": "alice_asia",
+    "email": "alice@example.asia",
+    "region": "asia"
+  },
+  "updateUser": {
+    "username": "bob_updated",
+    "email": "bob.updated@example.asia"
+  },
+  "apiEndpoints": {
+    "getAll": "/users",
+    "getByRegion": "/users?region=asia",
+    "create": "/users",
+    "getById": "/users/{id}",
+    "update": "/users/{id}",
+    "delete": "/users/{id}"
+  }
+}

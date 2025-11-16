@@ -1,0 +1,37 @@
+{
+  "region": "eu",
+  "currency": "EUR",
+  "e2eScenarios": [
+    {
+      "scenarioName": "User Login and Product Purchase Flow",
+      "user": {
+        "username": "jane_eu",
+        "password": "password123",
+        "email": "jane@example.com"
+      },
+      "product": {
+        "name": "Laptop",
+        "price": 899,
+        "currency": "EUR"
+      },
+      "expectedOutcome": "successful_purchase"
+    },
+    {
+      "scenarioName": "User Registration via API and UI Verification",
+      "newUser": {
+        "username": "testuser_eu",
+        "email": "testuser@example.eu",
+        "region": "eu"
+      },
+      "expectedOutcome": "user_visible_in_ui"
+    }
+  ],
+  "apiConfig": {
+    "baseUrl": "/api",
+    "timeout": 30000
+  },
+  "uiConfig": {
+    "baseUrl": "/",
+    "timeout": 30000
+  }
+}

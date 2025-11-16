@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - E-Commerce App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        h1 { font-size: 2.5em; }
+        nav {
+            background: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            padding: 10px 25px;
+            border-radius: 25px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .content {
+            padding: 40px;
+        }
+        .region-selector {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .region-selector select {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 2px solid #667eea;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .product-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-color: #667eea;
+        }
+        .product-name {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .product-price {
+            font-size: 1.8em;
+            color: #667eea;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .product-region {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.5em;
+            color: #667eea;
+        }
+        .product-count {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="products-title">Products</h1>
+        </header>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/products">Products</a>
+            <a href="/users">Users</a>
+        </nav>
+
+        <div class="content">
+            <div class="region-selector">
+                <label for="region-filter">Filter by Region:</label>
+                <select id="region-filter">
+                    <option value="">All Regions</option>
+                    <option value="us">United States (US)</option>
+                    <option value="eu">Europe (EU)</option>
+                    <option value="asia">Asia Pacific</option>
+                </select>
+            </div>
+
+            <div id="product-count" class="product-count"></div>
+
+            <div id="products-container" class="products-grid">
+                <div class="loading">Loading products...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const regionFilter = document.getElementById('region-filter');
+        const productsContainer = document.getElementById('products-container');
+        const productCount = document.getElementById('product-count');
+
+        async function loadProducts(region = '') {
+            try {
+                productsContainer.innerHTML = '<div class="loading">Loading products...</div>';
+
+                const url = region ? `/api/products?region=${region}` : '/api/products';
+                const response = await fetch(url);
+                const data = await response.json();
+
+                productCount.textContent = `Showing ${data.count} product${data.count !== 1 ? 's' : ''}`;
+
+                if (data.products.length === 0) {
+                    productsContainer.innerHTML = '<div class="loading">No products found</div>';
+                    return;
+                }
+
+                productsContainer.innerHTML = '';
+                data.products.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-name" data-product-id="${product.id}">${product.name}</div>
+                        <div class="product-price">${product.price} ${product.currency}</div>
+                        <div class="product-region">${product.region.toUpperCase()}</div>
+                    `;
+                    productsContainer.appendChild(card);
+                });
+            } catch (error) {
+                productsContainer.innerHTML = '<div class="loading">Error loading products</div>';
+                console.error('Error:', error);
+            }
+        }
+
+        regionFilter.addEventListener('change', (e) => {
+            loadProducts(e.target.value);
+        });
+
+        // Load products on page load
+        loadProducts();
+    </script>
+</body>
+</html>

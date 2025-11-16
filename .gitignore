@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Test results
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Environment files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Screenshots
+screenshots/
+*.png
+*.jpg
+
+# Videos
+videos/
+*.mp4
+*.webm

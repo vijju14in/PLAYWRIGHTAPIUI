@@ -1,0 +1,23 @@
+{
+  "region": "asia",
+  "testUsers": [
+    {
+      "username": "bob_asia",
+      "password": "password123",
+      "email": "bob@example.com",
+      "expectedMessage": "Login successful! Welcome bob_asia"
+    },
+    {
+      "username": "invalid_user_asia",
+      "password": "wrongpassword",
+      "email": "",
+      "expectedMessage": "Invalid credentials"
+    }
+  ],
+  "pageElements": {
+    "title": "Login",
+    "submitButton": "Login",
+    "usernameLabel": "Username",
+    "passwordLabel": "Password"
+  }
+}

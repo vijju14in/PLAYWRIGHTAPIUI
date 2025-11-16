@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce App - Home</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .subtitle { font-size: 1.2em; opacity: 0.9; }
+        nav {
+            background: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            padding: 10px 25px;
+            border-radius: 25px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .content {
+            padding: 40px;
+        }
+        .region-selector {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .region-selector label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #333;
+        }
+        .region-selector select {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 2px solid #667eea;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 15px;
+            background: #28a745;
+            color: white;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="app-title">Welcome to E-Commerce App</h1>
+            <p class="subtitle">Your one-stop shop for amazing products</p>
+        </header>
+
+        <nav>
+            <a href="/" id="nav-home">Home</a>
+            <a href="/login" id="nav-login">Login</a>
+            <a href="/products" id="nav-products">Products</a>
+            <a href="/users" id="nav-users">Users</a>
+        </nav>
+
+        <div class="content">
+            <div class="region-selector">
+                <label for="region-select">Select Region:</label>
+                <select id="region-select">
+                    <option value="us">United States (US)</option>
+                    <option value="eu">Europe (EU)</option>
+                    <option value="asia">Asia Pacific</option>
+                </select>
+            </div>
+
+            <div id="region-info" style="text-align: center; margin-bottom: 30px;">
+                <h2>Current Region: <span id="current-region">US</span></h2>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Products</h3>
+                    <p>Browse our extensive catalog of products available in your region.</p>
+                    <span class="status">Available</span>
+                </div>
+
+                <div class="card">
+                    <h3>User Management</h3>
+                    <p>Manage user accounts and preferences across different regions.</p>
+                    <span class="status">Active</span>
+                </div>
+
+                <div class="card">
+                    <h3>API Integration</h3>
+                    <p>Seamless API integration for developers and testers.</p>
+                    <span class="status">Ready</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const regionSelect = document.getElementById('region-select');
+        const currentRegion = document.getElementById('current-region');
+
+        regionSelect.addEventListener('change', (e) => {
+            const region = e.target.value.toUpperCase();
+            currentRegion.textContent = region;
+            localStorage.setItem('selectedRegion', e.target.value);
+        });
+
+        // Load saved region
+        const savedRegion = localStorage.getItem('selectedRegion') || 'us';
+        regionSelect.value = savedRegion;
+        currentRegion.textContent = savedRegion.toUpperCase();
+    </script>
+</body>
+</html>
