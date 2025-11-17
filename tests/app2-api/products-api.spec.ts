@@ -53,7 +53,7 @@ test.describe('App2 - Products API Tests', () => {
     expect(json.region).toBe(testData.expectedProducts[0].region);
   });
 
-  test('should create a new product', async () => {
+  test('should create a new product', async ({ request }) => {
     const newProduct = testData.newProduct;
     const response = await apiHelper.post('/api/products', newProduct, 201);
     const json = await apiHelper.getJSON(response);
@@ -64,6 +64,11 @@ test.describe('App2 - Products API Tests', () => {
     expect(json.price).toBe(newProduct.price);
     expect(json.currency).toBe(newProduct.currency);
     expect(json.region).toBe(newProduct.region);
+
+    // Clean up - delete the created product
+    if (json.id) {
+      await request.delete(`/api/products/${json.id}`);
+    }
   });
 
   test('should return 404 for non-existent product', async ({ request }) => {

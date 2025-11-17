@@ -71,7 +71,7 @@ test.describe('App2 - Users API Tests', () => {
   test('should update a user', async ({ request }) => {
     // First create a user
     const apiHelper = new APIHelper(request);
-    const createResponse = await apiHelper.post('/users', testData.newUser, 201);
+    const createResponse = await apiHelper.post('/api/users', testData.newUser, 201);
     const createdUser = await apiHelper.getJSON(createResponse);
 
     // Update the user
@@ -85,13 +85,13 @@ test.describe('App2 - Users API Tests', () => {
     expect(updatedUser.email).toBe(updateData.email);
 
     // Clean up
-    await request.delete(`/users/${createdUser.id}`);
+    await request.delete(`/api/users/${createdUser.id}`);
   });
 
   test('should delete a user', async ({ request }) => {
     // First create a user
     const apiHelper = new APIHelper(request);
-    const createResponse = await apiHelper.post('/users', testData.newUser, 201);
+    const createResponse = await apiHelper.post('/api/users', testData.newUser, 201);
     const createdUser = await apiHelper.getJSON(createResponse);
 
     // Delete the user

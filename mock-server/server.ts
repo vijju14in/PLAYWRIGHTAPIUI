@@ -123,6 +123,16 @@ app.post('/api/products', (req: Request, res: Response) => {
   res.status(201).json(newProduct);
 });
 
+app.delete('/api/products/:id', (req: Request, res: Response) => {
+  const index = products.findIndex(p => p.id === parseInt(req.params.id));
+  if (index !== -1) {
+    const deletedProduct = products.splice(index, 1);
+    res.json({ message: 'Product deleted', product: deletedProduct[0] });
+  } else {
+    res.status(404).json({ error: 'Product not found' });
+  }
+});
+
 // Login API
 app.post('/api/login', (req: Request, res: Response) => {
   const { username, password } = req.body;

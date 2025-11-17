@@ -102,6 +102,12 @@ test.describe('App3 - API and UI Data Consistency Tests', () => {
 
     // Verify product appears in UI
     await productsPage.verifyProductDisplayed(newProduct.name);
+
+    // Clean up - delete the created product
+    if (createdProduct.id) {
+      const deleteResponse = await request.delete(`/api/products/${createdProduct.id}`);
+      expect(deleteResponse.status()).toBe(200);
+    }
   });
 
   test('should update user via API and verify change in UI', async ({ page, request }) => {

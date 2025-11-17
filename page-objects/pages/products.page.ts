@@ -33,7 +33,10 @@ export class ProductsPage extends BasePage {
    */
   async filterByRegion(region: string) {
     await this.regionFilter.selectOption(region);
-    await this.wait(1000); // Wait for products to load
+    // Wait for loading indicator to appear and disappear
+    await this.page.waitForSelector('.loading', { state: 'attached', timeout: 2000 }).catch(() => {});
+    await this.page.waitForSelector('.loading', { state: 'detached', timeout: 5000 }).catch(() => {});
+    await this.wait(500); // Additional wait for stability
   }
 
   /**
@@ -93,6 +96,13 @@ export class ProductsPage extends BasePage {
    * Wait for products to load
    */
   async waitForProductsToLoad() {
+    // Wait for loading to disappear
+    await this.page.waitForSelector('.loading', { state: 'detached', timeout: 10000 }).catch(() => {});
+    // Ensure at least one product card is visible
     await this.page.waitForSelector('.product-card', { state: 'visible', timeout: 10000 });
+    // Wait for network to be idle
+    await this.page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
+    // Small additional wait for DOM to stabilize
+    await this.wait(200);
   }
 }

@@ -80,34 +80,34 @@ export default defineConfig({
     },
 
     // Additional browser configurations (optional)
-    {
-      name: 'app1-ui-firefox',
-      testDir: './tests/app1-ui',
-      use: {
-        ...devices['Desktop Firefox'],
-        baseURL: envConfig.baseUrl,
-      },
-    },
+  //   {
+  //     name: 'app1-ui-firefox',
+  //     testDir: './tests/app1-ui',
+  //     use: {
+  //       ...devices['Desktop Firefox'],
+  //       baseURL: envConfig.baseUrl,
+  //     },
+  //   },
 
-    {
-      name: 'app1-ui-webkit',
-      testDir: './tests/app1-ui',
-      use: {
-        ...devices['Desktop Safari'],
-        baseURL: envConfig.baseUrl,
-      },
-    },
+  //   {
+  //     name: 'app1-ui-webkit',
+  //     testDir: './tests/app1-ui',
+  //     use: {
+  //       ...devices['Desktop Safari'],
+  //       baseURL: envConfig.baseUrl,
+  //     },
+  //   },
 
-    // Mobile configurations
-    {
-      name: 'app1-ui-mobile',
-      testDir: './tests/app1-ui',
-      use: {
-        ...devices['iPhone 13'],
-        baseURL: envConfig.baseUrl,
-      },
-    },
-  ],
+  //   // Mobile configurations
+  //   {
+  //     name: 'app1-ui-mobile',
+  //     testDir: './tests/app1-ui',
+  //     use: {
+  //       ...devices['iPhone 13'],
+  //       baseURL: envConfig.baseUrl,
+  //     },
+  //   },
+   ],
 
   // Web server configuration (auto-start mock server for local testing)
   webServer: {

@@ -121,7 +121,7 @@ test.describe('App2 - Login API Tests', () => {
     ];
 
     for (const user of users) {
-      const response = await apiHelper.post('/login', user, 200);
+      const response = await apiHelper.post('/api/login', user, 200);
       const json = await apiHelper.getJSON(response);
 
       expect(json.success).toBe(true);
